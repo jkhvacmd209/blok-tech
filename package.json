@@ -2,19 +2,27 @@
   "name": "blok-tech",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/jkhvacmd209/blok-tech#readme",
+  "author": "Joppe Koops",
+  "bugs": {
+    "url": "https://github.com/jkhvacmd209/blok-tech/issues",
+    "email": "joppe.koops@hva.nl"
+  },
+  "license": "MIT",
+  "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "serve": "echo \"Error: no serve specified\" && exit 1",
+    "build": "echo \"Error: no build specified\" && exit 1"
+  },
+  "dependencies": {
+    "camelcase": "^7.0.1",
+    "express": "^4.18.2"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jkhvacmd209/blok-tech.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jkhvacmd209/blok-tech/issues"
-  },
-  "homepage": "https://github.com/jkhvacmd209/blok-tech#readme"
+  }
 }
