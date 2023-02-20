@@ -1,0 +1,89 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: sans-serif;;
+}
+
+input, textarea {
+	display: block;
+}
+
+fieldset#images {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	gap: 1em;
+	padding: 1em;
+	margin: 1em 0;
+}
+
+legend {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+input[type="file"] {
+	position: relative;
+	background-color: #ddd;
+	aspect-ratio: 1/1;
+	background-image: url(../img/add-image.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	background-size: 30%;
+	font-size: 1em;
+	padding-top: 90%;
+	padding-left: 1em;
+}
+
+input[type="file"]:hover {
+  opacity: .7;
+}
+
+input[type="file"]:first-of-type {
+	grid-row: 1/3;
+	height: 100%;
+	aspect-ratio: initial;
+}
+
+input[type=file]::file-selector-button {
+	display: none;
+}
+
+input[type=file]::-webkit-file-upload-button {
+	display: none;
+}
+
+input[type=file]:not(:invalid)::before {
+	content: "";
+	background-image: url(../img/edit.png);
+	background-color: #0009;
+	border-radius: 100%;
+	position: absolute;
+	top: .5em;
+	right: .5em;
+	width: 2.5em;
+	aspect-ratio: 1/1;
+	background-size: 60%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/* Bron: https://stackoverflow.com/questions/43360769/remove-default-style-of-input-type-file*/
+
+input[type="submit"] {
+  padding: .5em 1em;
+  font-size: 1em;
+  border-radius: 1.5em;
+  border: none;
+  background-color: dodgerblue;
+  color: white;
+  transition: 100ms;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  transform: scale(.99);
+  opacity: .9;
+}
