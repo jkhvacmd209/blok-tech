@@ -1,10 +1,10 @@
-uploadInputs = document.querySelectorAll('input[type=file]');
+const uploadInputs = document.querySelectorAll('input[type=file]');
 
 uploadInputs.forEach((input) => {
 
 	input.style.color = 'transparent';
 
-	input.addEventListener('change', (e) => {
+	input.addEventListener('change', () => {
 
 		if (input.files.length == 0) {
 			input.style.backgroundImage = 'url(./img/add-image.png)';
