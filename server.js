@@ -14,7 +14,7 @@ app.set('views', './views')
 app.use(express.static('static'))
 
 app.get('/', (req, res) => {
-	res.render({ pageTitle: 'Plaats een advertentie' })
+	res.render('home', { pageTitle: 'Plaats een advertentie' })
 })
 
 app.listen(port, () => {
