@@ -1,16 +1,20 @@
-const express = require('express');
+const express = require('express')
 
-const app = express();
+const app = express()
 const port = 3000
+
+const { engine } = require('express-handlebars')
+
+app.engine('handlebars', engine())
+
+app.set('view engine', 'handlebars')
+
+app.set('views', './views')
 
 app.use(express.static('static'))
 
 app.get('/', (req, res) => {
-	res.send('<h1>Hello World!</h1><a href="/about/">About</a>')
-})
-
-app.get('/about/', (req, res) => {
-	res.send('<h1>About Us</h1><a href="/">Home</a>')
+	res.render({ pageTitle: 'Plaats een advertentie' })
 })
 
 app.listen(port, () => {
