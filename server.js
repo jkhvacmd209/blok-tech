@@ -17,6 +17,15 @@ app.get('/', (req, res) => {
 	res.render('home', { pageTitle: 'Plaats een advertentie' })
 })
 
+app.get('/plaats', (req, res) => {
+	res.render('plaats', { pageTitle: 'Plaats een advertentie' })
+})
+
+app.use((req, res) => {
+	res.status(404)
+	res.send('404')
+})
+
 app.listen(port, () => {
 	console.log(`Yes! The server is running and listening on port ${port}`)
 })
