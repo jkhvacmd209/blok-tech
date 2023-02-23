@@ -1,40 +1,44 @@
 <main>
 	<h1>Plaats een advertentie</h1>
-	<form action="">
-		<!-- <fieldset>
-				<legend>Algemene informatie</legend>
+	<form action="/plaats-advertentie" method="post">
 
-				<label for="titel">Titel</label>
-				<input type="text" name="titel" id="titel">
+		<div>
+			<label for="title">Geef een titel</label>
+			<input type="text" name="title" id="title">
+		</div>
 
-				<label for="beschrijving">Beschrijving</label>
-				<textarea name="beschrijving" id="beschrijving"></textarea>
+		<div>
+			<label for="images">Voeg afbeeldingen toe</label>
+			<input type="file" name="images" id="images">
+		</div>
 
-				<label for="locatie">Locatie</label>
-				<input type="text" name="locatie" id="locatie">
+		<div>
+			<label for="location">Waar is je locatie</label>
+			<input type="text" name="location" id="location">
+		</div>
 
-				<label for="stijl">Stijl</label>
-				<input type="radio" name="stijl" id="middeleeuws"><label for="middeleeuws">Middeleeuws</label>
-				<input type="radio" name="stijl" id="romeins"><label for="romeins">Romeins</label>
-				<input type="radio" name="stijl" id="modern"><label for="modern">Modern</label>
-			</fieldset> -->
-		<fieldset id="images">
-			<legend>Upload afbeeldingen</legend>
-			<input type="file" required>
-			<input type="file" required>
-			<input type="file" required>
-			<input type="file" required>
-			<input type="file" required>
-		</fieldset>
-		<!-- <fieldset>
-				<legend>Contact Informatie</legend>
+		<div>
+			<label for="description">Beschrijving</label>
+			<textarea name="description" id="description"></textarea>
 
-				<label for="email">E-mail Adres</label>
-				<input type="email" id="email" name="mobiel">
+			<label for="location_type">Type Locatie</label>
 
-				<label for="mobiel">Mobiel Nummer</label>
-				<input type="tel" id="mobiel" name="mobiel">
-			</fieldset> -->
+			<label for="">Voorzieningen</label>
+			<input type="number" name="parking_places" id="parking_places"><label for="parking_places">Aantal parkeerplekken</label>
+			<input type="checkbox" name="electricity" id="electricity"><label for="electricity">Stroom</label>
+			<input type="checkbox" name="three_phase_electricity" id="three_phase_electricity"><label for="three_phase_electricity">Krachtstroom</label>
+			<input type="checkbox" name="water" id="water"><label for="water">Water</label>
+
+			<label for="location_size">Groote van Locatie</label>
+			<input type="number" name="location_size" id="location_size"><label>m<sup>2</sup></label>
+		</div>
+
 		<input type="submit" value="Opslaan">
 	</form>
 </main>
+
+<script type="text/javascript" src="js/add-image.js"></script>
+
+<script type="text/javascript" src="js/location-autocomplete.js"></script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{mapsApiKey}}&libraries=places&callback=initAutocomplete"></script>

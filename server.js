@@ -1,3 +1,44 @@
+const advertenties = [{
+		title: 'Locatie in Amsterdam',
+		description: 'Het Theo Thijssenhuis van de Hogeschool van Amsterdam',
+		images: [],
+		location: 'Wibautstraat 2, 1091 GM Amsterdam',
+		locationType: 'school',
+		locationSize: 33000,
+		services: {
+			parkingPlaces: 115,
+			electricity: true,
+			threePhaceElectricity: false,
+			water: true
+		},
+		contactInformation: {
+			fullName: 'Joppe Koops',
+			email: 'joppe.koops@hva.nl',
+			phone: ''
+		}
+	},
+	{
+		title: 'Locatie in centrum Amsterdam',
+		description: 'Het centraal station van Amsterdam',
+		images: [],
+		location: 'Stationsplein, 1012 AB Amsterdam',
+		locationType: 'station',
+		locationSize: 50000,
+		services: {
+			parkingPlaces: 0,
+			electricity: true,
+			threePhaceElectricity: false,
+			water: true
+		},
+		contactInformation: {
+			fullName: 'Joppe Koops',
+			email: 'joppe.koops@hva.nl',
+			phone: ''
+		}
+	}
+]
+
+
 const express = require('express')
 
 const app = express()
@@ -12,19 +53,44 @@ app.set('view engine', 'handlebars')
 app.set('views', './views')
 
 app.use(express.static('static'))
+app.use(express.urlencoded({ extended: true }))
+
+
+
+/* --- ROUTING --- */
+
+/* Home pagina */
 
 app.get('/', (req, res) => {
-	res.render('home', { pageTitle: 'Plaats een advertentie' })
+	res.render('home', { pageTitle: 'Home', data: advertenties })
 })
 
+
+/* Plaats formulier */
+
 app.get('/plaats', (req, res) => {
-	res.render('plaats', { pageTitle: 'Plaats een advertentie' })
+	res.render('plaats', { pageTitle: 'Plaats een advertentie', mapsApiKey: '' })
 })
+
+
+/* Verwerken van formulier */
+
+app.post('plaats-advertentie', (req, res) => {
+
+})
+
+
+/* Errors */
 
 app.use((req, res) => {
 	res.status(404)
-	res.send('404')
+	res.render('error', { pageTitle: 'Error: 404 Not Found' })
 })
+
+
+
+
+
 
 app.listen(port, () => {
 	console.log(`Yes! The server is running and listening on port ${port}`)
