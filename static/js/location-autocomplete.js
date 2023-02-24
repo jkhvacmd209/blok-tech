@@ -1,6 +1,7 @@
 const locationInput = document.getElementById('location')
 
 let autocomplete
+let place
 
 function initAutocomplete() {
 
@@ -15,7 +16,7 @@ function initAutocomplete() {
 
 	autocomplete.addListener('place_changed', () => {
 
-		let place = autocomplete.getPlace()
+		place = autocomplete.getPlace()
 
 		if (!place.geometry) {
 			// The user did not input a location
@@ -23,6 +24,7 @@ function initAutocomplete() {
 		} else {
 			// The user did input a location
 			locationInput.style.borderColor = 'green'
+			locationInput.value = place.formatted_address
 		}
 
 	})

@@ -2,7 +2,7 @@ const advertenties = [{
 		title: 'Locatie in Amsterdam',
 		description: 'Het Theo Thijssenhuis van de Hogeschool van Amsterdam',
 		images: [],
-		location: 'Wibautstraat 2, 1091 GM Amsterdam',
+		location: 'Amstelcampus Wibautstraat 2 TTH, 1091 GM Amsterdam, Nederland',
 		locationType: 'school',
 		locationSize: 33000,
 		services: {
@@ -52,6 +52,9 @@ app.set('view engine', 'handlebars')
 
 app.set('views', './views')
 
+const dotenv = require('dotenv')
+dotenv.config()
+
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
@@ -69,7 +72,7 @@ app.get('/', (req, res) => {
 /* Plaats formulier */
 
 app.get('/plaats', (req, res) => {
-	res.render('plaats', { pageTitle: 'Plaats een advertentie', mapsApiKey: '' })
+	res.render('plaats', { pageTitle: 'Plaats een advertentie', mapsApiKey: process.env.MAPS_API_KEY })
 })
 
 
