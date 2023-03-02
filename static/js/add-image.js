@@ -1,19 +1,36 @@
-const uploadInputs = document.querySelectorAll('input[type=file]');
+const uploadInput = document.querySelector('input[type=file]')
+const imageList = document.querySelector('.image-list')
 
-uploadInputs.forEach((input) => {
+let images = []
 
-	input.style.color = 'transparent';
+uploadInput.style.color = 'transparent'
+uploadInput.style.backgroundImage = 'url(./img/add-image.png)';
 
-	input.addEventListener('change', () => {
+uploadInput.addEventListener('change', () => {
 
-		if (input.files.length == 0) {
-			input.style.backgroundImage = 'url(./img/add-image.png)';
-			input.style.backgroundSize = '30%';
-		} else {
-			input.style.backgroundImage = 'url(' + URL.createObjectURL(input.files[0]) + ')';
-			input.style.backgroundSize = 'cover';
-		}
+	if (uploadInput.files.length == 0) {
+		return
+	}
 
-	})
+	for (let i = 0; i < uploadInput.files.length; i++) {
+		images.push(uploadInput.files[i])
+	}
+	updateImages()
+})
 
-});
+const updateImages = () => {
+
+	let imageListElements = ''
+
+	for (let i = 0; i < images.length; i++) {
+		imageListElements += `<div class="upload-image-container"><img src="${URL.createObjectURL(images[i])}" alt="${images[i].name}"/ ><button type="button" data-index="${i}" onclick="deleteImage(this.dataset.index)">✕</button></div>`
+	}
+
+	imageList.innerHTML = imageListElements
+
+}
+
+const deleteImage = (i) => {
+	images.splice(i, 1)
+	updateImages()
+}

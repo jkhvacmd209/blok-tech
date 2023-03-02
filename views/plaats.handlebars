@@ -2,35 +2,72 @@
 	<h1>Plaats een advertentie</h1>
 	<form action="/plaats-advertentie" method="post">
 
-		<div>
+		<div class="form-group">
 			<label for="title">Geef een titel</label>
-			<input type="text" name="title" id="title">
+			<div class="input">
+				<input type="text" name="title" id="title" autocomplete="off" required>
+				<span class="input_validation-message"></span>
+			</div>
+			<p>Een goede titel omschrijft wat de locatie is en de look en feel van de locatie.</p>
 		</div>
 
-		<div>
+		<div class="form-group">
 			<label for="images">Voeg afbeeldingen toe</label>
-			<input type="file" name="images" id="images">
+			<div class="input file-input">
+				<div class="image-list"></div>
+				<input type="file" name="images" id="images" multiple accept="image/png, image/jpg, image/webp">
+			</div>
+			<p>Voeg zowel foto's toe van de gehele locatie als van belangrijke detail.</p>
 		</div>
 
-		<div>
-			<label for="location">Waar is je locatie</label>
-			<input type="text" name="location" id="location">
+		<div class="form-group">
+			<label for="location">Waar is je locatie?</label>
+			<input type="text" name="location" id="location" autocomplete="off" required>
+			<p>Het adres van de locatie is niet direct zichtbaar in de advertentie</p>
 		</div>
 
-		<div>
+		<div class="form-group">
 			<label for="description">Beschrijving</label>
-			<textarea name="description" id="description"></textarea>
+			<textarea name="description" id="description" required></textarea>
 
 			<label for="location_type">Type Locatie</label>
+			<select name="location_type" id="location_type">
+				<option value="woonhuis">Woonhuis</option>
+				<option value="winkel">Winkel</option>
+				<option value="kantoor">Kantoor</option>
+				<option value="studio">Studio</option>
+			</select>
 
 			<label for="">Voorzieningen</label>
-			<input type="number" name="parking_places" id="parking_places"><label for="parking_places">Aantal parkeerplekken</label>
-			<input type="checkbox" name="electricity" id="electricity"><label for="electricity">Stroom</label>
-			<input type="checkbox" name="three_phase_electricity" id="three_phase_electricity"><label for="three_phase_electricity">Krachtstroom</label>
-			<input type="checkbox" name="water" id="water"><label for="water">Water</label>
+			<div class="input">
+				<input type="number" name="parking_places" id="parking_places" required>
+				<label for="parking_places">Aantal parkeerplekken</label>
+			</div>
+			<div class="input">
+				<input type="checkbox" name="electricity" id="electricity">
+				<label for="electricity">Stroom</label>
+			</div>
+			<div class="input">
+				<input type="checkbox" name="three_phase_electricity" id="three_phase_electricity">
+				<label for="three_phase_electricity">Krachtstroom</label>
+			</div>
+			<div class="input">
+				<input type="checkbox" name="water" id="water"><label for="water">Water</label>
+			</div>
 
 			<label for="location_size">Groote van Locatie</label>
-			<input type="number" name="location_size" id="location_size"><label>m<sup>2</sup></label>
+			<input type="number" name="location_size" id="location_size" required><label>m<sup>2</sup></label>
+		</div>
+
+		<div class="form-group">
+			<label for="name">Naam</label>
+			<input type="text" name="name" id="name" autocomplete="name" required>
+
+			<label for="email">E-mail Adres</label>
+			<input type="email" name="email" id="email" autocomplete="email" required>
+
+			<label for="phone">Telefoon Nummer</label>
+			<input type="tel" name="phone" id="phone" autocomplete="tel" required>
 		</div>
 
 		<input type="submit" value="Opslaan">
@@ -41,4 +78,4 @@
 
 <script type="text/javascript" src="js/location-autocomplete.js"></script>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key={{mapsApiKey}}&libraries=places&callback=initAutocomplete"></script>
+<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key={{mapsApiKey}}&libraries=places&callback=initAutocomplete"></script> -->
