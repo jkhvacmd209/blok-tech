@@ -8,7 +8,7 @@ const advertenties = [{
 		services: {
 			parkingPlaces: 115,
 			electricity: true,
-			threePhaceElectricity: false,
+			threePhaseElectricity: false,
 			water: true
 		},
 		contactInformation: {
@@ -27,7 +27,7 @@ const advertenties = [{
 		services: {
 			parkingPlaces: 0,
 			electricity: true,
-			threePhaceElectricity: false,
+			threePhaseElectricity: false,
 			water: true
 		},
 		contactInformation: {
