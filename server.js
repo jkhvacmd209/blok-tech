@@ -78,8 +78,8 @@ app.get('/plaats', (req, res) => {
 
 /* Verwerken van formulier */
 
-app.post('plaats-advertentie', (req, res) => {
-
+app.post('/plaats-advertentie', (req, res) => {
+	res.render('advertentie', { pageTitle: 'Advertentie', data: req.body })
 })
 
 
