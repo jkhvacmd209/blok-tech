@@ -63,7 +63,6 @@ const storage = multer.diskStorage({
 		callback(null, 'static/upload')
 	},
 	filename: (req, file, callback) => {
-		console.log(file)
 		callback(null, file.originalname)
 	}
 })
@@ -95,8 +94,7 @@ app.get('/plaats', (req, res) => {
 /* Verwerken van formulier */
 
 app.post('/plaats-advertentie', upload.array('images'), (req, res) => {
-	//console.log(req.files[0])
-	//res.render('advertentie', { pageTitle: 'Advertentie', data: req.body })
+	res.render('advertentie', { pageTitle: 'Advertentie', data: req.body, files: req.files })
 })
 
 
