@@ -58,12 +58,16 @@ dotenv.config()
 
 const multer = require('multer')
 
+let count = 0
+
 const storage = multer.diskStorage({
 	destination: (req, file, callback) => {
 		callback(null, 'static/upload')
 	},
 	filename: (req, file, callback) => {
-		callback(null, file.originalname)
+		console.log(file)
+		callback(null, `${count}.${file.mimetype.split('/')[1]}`)
+		count++
 	}
 })
 
