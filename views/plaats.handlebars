@@ -1,6 +1,6 @@
 <main>
 	<h1>Plaats een advertentie</h1>
-	<form action="/plaats-advertentie" method="post">
+	<form action="/plaats-advertentie" method="post" enctype="multipart/form-data">
 
 		<div class="form-group">
 			<label for="title">Geef een titel</label>
@@ -15,7 +15,7 @@
 			<label for="images">Voeg afbeeldingen toe</label>
 			<div class="input file-input">
 				<div class="image-list"></div>
-				<input type="file" name="images" id="images" multiple accept="image/png, image/jpg, image/webp">
+				<input type="file" name="images" id="images" multiple accept="image/">
 			</div>
 			<p>Voeg zowel foto's toe van de gehele locatie als van belangrijke detail.</p>
 		</div>

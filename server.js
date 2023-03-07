@@ -55,6 +55,22 @@ app.set('views', './views')
 const dotenv = require('dotenv')
 dotenv.config()
 
+
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+	destination: (req, file, callback) => {
+		callback(null, 'static/upload')
+	},
+	filename: (req, file, callback) => {
+		console.log(file)
+		callback(null, file.originalname)
+	}
+})
+
+const upload = multer({ storage: storage })
+
+
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
@@ -78,8 +94,9 @@ app.get('/plaats', (req, res) => {
 
 /* Verwerken van formulier */
 
-app.post('/plaats-advertentie', (req, res) => {
-	res.render('advertentie', { pageTitle: 'Advertentie', data: req.body })
+app.post('/plaats-advertentie', upload.array('images'), (req, res) => {
+	//console.log(req.files[0])
+	//res.render('advertentie', { pageTitle: 'Advertentie', data: req.body })
 })
 
 
