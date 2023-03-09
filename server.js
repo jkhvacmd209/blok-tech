@@ -71,6 +71,18 @@ const storage = multer.diskStorage({
 	}
 })
 
+const { MongoClient, ServerApiVersion } = require('mongodb')
+
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/?retryWrites=true&w=majority`
+
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
+
+client.connect(err => {
+	if (err) { throw err }
+})
+
+const db = client.db(process.env.DB_NAME)
+
 const upload = multer({ storage: storage })
 
 
@@ -97,8 +109,27 @@ app.get('/plaats', (req, res) => {
 
 /* Verwerken van formulier */
 
-app.post('/plaats-advertentie', upload.array('images'), (req, res) => {
-	res.render('advertentie', { pageTitle: 'Advertentie', data: req.body, files: req.files })
+// app.post('/plaats-advertentie', upload.array('images'), (req, res) => {
+// 	res.render('advertentie', { pageTitle: 'Advertentie', data: req.body, files: req.files })
+// })
+
+app.get('/plaats-advertentie', (req, res) => {
+
+	function done(err, data) {
+		console.log('functie werkt')
+		if (err) {
+			console.log(err)
+		} else {
+			console.log(data)
+			res.send('test')
+		}
+	}
+
+	console.log('there was a request')
+
+	db.collection('advertisements').find().toArray(done)
+
+
 })
 
 
