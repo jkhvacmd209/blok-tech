@@ -1,0 +1,32 @@
+<main>
+	<a href="/"><-- Terug naar resultaten</a>
+	<h1>{{data.title}}</h1>
+
+	{{#each files}}
+		<img src="/upload/{{this.filename}}" width="100%"/>
+	{{/each}}
+
+	<h2>Omschrijving</h2>
+	<p>{{data.description}}</p>
+
+	<h2>Eigenschappen</h2>
+	<ul>
+		<li>Type: {{data.location_type}}</li>
+		<li>Grootte: {{data.location_size}} m<sup>2</sup></li>
+	</ul>
+
+	<h2>Voorzieningen</h2>
+
+	<ul>
+		{{#if data.water}}
+			<li>Water</li>
+		{{/if}}
+		{{#if data.electricity}}
+			<li>Electriciteit</li>
+		{{/if}}
+		{{#if data.three_phase_electricity}}
+			<li>Krachtstroom</li>
+		{{/if}}
+		<li>Aantal parkeer plaatsen: {{data.parking_places}}</li>
+	</ul>
+</main>
