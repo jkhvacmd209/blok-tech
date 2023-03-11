@@ -51,13 +51,14 @@
 				<label for="location_type">Type Locatie</label>
 
 				<div class="input">
-					<select name="location_type" id="location_type">
-						<option disabled selected>Kies...</option>
+					<select name="location_type" id="location_type" required>
+						<option disabled selected value="">Kies...</option>
 						<option value="woonhuis">Woonhuis</option>
 						<option value="winkel">Winkel</option>
 						<option value="kantoor">Kantoor</option>
 						<option value="studio">Studio</option>
 					</select>
+					<span class="input_validation-message"></span>
 				</div>
 
 			</div>
@@ -66,8 +67,9 @@
 			<div class="form-group">
 				<label for="">Voorzieningen</label>
 				<div class="input">
-					<input type="number" name="parking_places" id="parking_places" required>
+					<input type="number" name="parking_places" id="parking_places" required min="0" value="0">
 					<label for="parking_places">Aantal parkeerplekken</label>
+					<span class="input_validation-message"></span>
 				</div>
 				<div class="input">
 					<input type="checkbox" name="electricity" id="electricity">
@@ -86,7 +88,9 @@
 			<div class="form-group">
 				<label for="location_size">Groote van Locatie</label>
 				<div class="input">
-					<input type="number" name="location_size" id="location_size" required><label>m<sup>2</sup></label>
+					<input type="number" name="location_size" id="location_size" required min="0">
+					<label>m<sup>2</sup></label>
+					<span class="input_validation-message"></span>
 				</div>
 			</div>
 		</div>

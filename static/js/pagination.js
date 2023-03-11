@@ -59,27 +59,31 @@ const submitButton = controls.querySelector('button:nth-of-type(3)')
 const titleInput = document.querySelector('#title')
 const imageInput = document.querySelector('#images')
 
+const descriptionInput = document.querySelector('#description')
+const typeInput = document.querySelector('#location_type')
+const parkingInput = document.querySelector('#parking_places')
+const sizeInput = document.querySelector('#location_size')
+
 
 //set default step visibility
 
-goToStep(4)
+goToStep(1)
 
 
 
-//go to next step
+//go to next step and validate current step
 nextButton.addEventListener('click', () => {
 
 	switch (currentStep) {
 		case 1:
 
 			if (emptyInput(titleInput)) {
-				console.log('title input is empty')
 				setInvalid(titleInput, 'Je moet een titel invullen!')
 				break
 			}
 
-			if (isNotText(titleInput).value) {
-				setInvalid(titleInput, `${isNotText(titleInput).reason} is niet toegestaan.`)
+			if (inputIsNotText(titleInput).value) {
+				setInvalid(titleInput, `${inputIsNotText(titleInput).reason} is niet toegestaan.`)
 				break
 			}
 
@@ -90,7 +94,7 @@ nextButton.addEventListener('click', () => {
 
 		case 2:
 
-			if (noImages(images)) {
+			if (noImagesInArray(images)) {
 				setInvalid(imageInput, 'Je moet minstens één afbeelding toevoegen!')
 				break
 			}
@@ -108,6 +112,50 @@ nextButton.addEventListener('click', () => {
 
 		case 4:
 
+			if (emptyInput(descriptionInput)) {
+				setInvalid(descriptionInput, 'Vergeet niet een omschrijving te geven!')
+				break
+			}
+
+			if (inputIsNotText(descriptionInput).value) {
+				setInvalid(descriptionInput, `${inputIsNotText(descriptionInput).reason} is niet toegestaan.`)
+				break
+			}
+
+			setValid(descriptionInput)
+
+			if (emptyInput(typeInput)) {
+				setInvalid(typeInput, 'Vergeet niet je locatie type op te geven!')
+				break
+			}
+
+			setValid(typeInput)
+
+			if (emptyInput(parkingInput)) {
+				setInvalid(parkingInput, 'Je moet een aantal parkeerplekken opgeven.')
+				break
+			}
+
+			if (numberInputIsNegative(parkingInput)) {
+				setInvalid(parkingInput, 'Het aantal parkeerplekken mag niet negatief zijn.')
+				break
+			}
+
+			setValid(parkingInput)
+
+			if (emptyInput(sizeInput)) {
+				setInvalid(sizeInput, 'Je moet de grootte van de locatie opgeven.')
+				break
+			}
+
+			if (numberInputIsNegative(sizeInput)) {
+				setInvalid(sizeInput, 'De grootte mag niet negatief zijn.')
+				break
+			}
+
+			setValid(sizeInput)
+
+
 			goToStep(5)
 
 			break
@@ -123,35 +171,11 @@ prevButton.addEventListener('click', () => {
 
 	goToStep(currentStep - 1)
 
-	// switch (currentStep) {
-	// 	case 2:
-
-	// 		goToStep(1)
-
-	// 		break
-
-	// 	case 3:
-
-	// 		goToStep(2)
-
-	// 		break
-
-	// 	case 4:
-
-	// 		goToStep(3)
-
-	// 		break
-
-	// 	case 5:
-
-	// 		goToStep(4)
-
-	// 		break
-	// }
-
-
 })
 
+
+
+/* Form validation set functions */
 
 const setInvalid = (input, message) => {
 	input.parentElement.querySelector('.input_validation-message').textContent = `❗️ ${message}`
@@ -164,22 +188,29 @@ const setValid = (input) => {
 }
 
 
+/* Form validation check functions */
+
 const emptyInput = (input) => {
 	return input.value == ""
 }
 
-const isNotText = (input) => {
-	let regex = /[^A-Za-zÀ-ÖØ-öø-ÿ0-9!?\.,:\ \-|()\'\"]+/
+const inputIsNotText = (input) => {
+	let regex = /[^A-Za-zÀ-ÖØ-öø-ÿ0-9!?\.,:\ \-|()\'\"\n]+/
 	return {
 		value: regex.test(input.value),
 		reason: input.value.match(regex)
 	}
 }
 
-const noImages = (imageArray) => {
+const noImagesInArray = (imageArray) => {
 	if (imageArray.length === 0) {
 		return true
 	} else {
 		return false
 	}
+}
+
+const numberInputIsNegative = (input) => {
+	let regex = /^-\d+$/
+	return regex.test(input.value)
 }

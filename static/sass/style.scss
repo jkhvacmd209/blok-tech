@@ -101,7 +101,7 @@ input#location_size+label {
 	left: -3em;
 }
 
-input.invalid {
+.invalid {
 	outline: 1px solid red;
 }
 
@@ -225,4 +225,5 @@ button {
 
 .input_validation-message {
 	color: red;
+	display: block;
 }
