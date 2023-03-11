@@ -4,7 +4,7 @@
 
 		<div data-step="1">
 			<div class="form-group">
-				<label for="title">Geef een titel</label>
+				<label for="title">Advertentie titel</label>
 				<div class="input">
 					<input type="text" name="title" id="title" autocomplete="off" required>
 					<span class="input_validation-message"></span>
@@ -18,7 +18,8 @@
 				<label for="images">Voeg afbeeldingen toe</label>
 				<div class="input file-input">
 					<div class="image-list"></div>
-					<input type="file" name="images" id="images" multiple accept="image/">
+					<input type="file" name="images" id="images" multiple accept="image/*" required>
+					<span class="input_validation-message"></span>
 				</div>
 				<p>Voeg zowel foto's toe van de gehele locatie als van belangrijke detail.</p>
 			</div>
@@ -27,8 +28,11 @@
 		<div data-step="3">
 			<div class="form-group">
 				<label for="location">Waar is je locatie?</label>
-				<input type="text" name="location" id="location" autocomplete="off" required>
-				<p>Het adres van de locatie is niet direct zichtbaar in de advertentie</p>
+				<div class="input">
+					<input type="text" name="location" id="location" autocomplete="off" required>
+					<span class="input_validation-message"></span>
+				</div>
+				<p>Het adres van de locatie is niet direct zichtbaar in de advertentie.</p>
 			</div>
 		</div>
 

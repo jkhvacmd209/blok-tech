@@ -54,6 +54,12 @@ const submitButton = controls.querySelector('button:nth-of-type(3)')
 
 
 
+//get inputs
+
+const titleInput = document.querySelector('#title')
+const imageInput = document.querySelector('#images')
+
+
 //set default step visibility
 
 goToStep(1)
@@ -66,12 +72,30 @@ nextButton.addEventListener('click', () => {
 	switch (currentStep) {
 		case 1:
 
+			if (emptyInput(titleInput)) {
+				console.log('title input is empty')
+				setInvalid(titleInput, 'Je moet een titel invullen!')
+				break
+			}
+
+			if (isNotText(titleInput).value) {
+				setInvalid(titleInput, `${isNotText(titleInput).reason} is niet toegestaan.`)
+				break
+			}
+
+			setValid(titleInput)
 			goToStep(2)
 
 			break
 
 		case 2:
 
+			if (noImages(images)) {
+				setInvalid(imageInput, 'Je moet minstens één afbeelding toevoegen!')
+				break
+			}
+
+			setValid(imageInput)
 			goToStep(3)
 
 			break
@@ -97,31 +121,65 @@ nextButton.addEventListener('click', () => {
 //go to previous step
 prevButton.addEventListener('click', () => {
 
-	switch (currentStep) {
-		case 2:
+	goToStep(currentStep - 1)
 
-			goToStep(1)
+	// switch (currentStep) {
+	// 	case 2:
 
-			break
+	// 		goToStep(1)
 
-		case 3:
+	// 		break
 
-			goToStep(2)
+	// 	case 3:
 
-			break
+	// 		goToStep(2)
 
-		case 4:
+	// 		break
 
-			goToStep(3)
+	// 	case 4:
 
-			break
+	// 		goToStep(3)
 
-		case 5:
+	// 		break
 
-			goToStep(4)
+	// 	case 5:
 
-			break
-	}
+	// 		goToStep(4)
+
+	// 		break
+	// }
 
 
 })
+
+
+const setInvalid = (input, message) => {
+	input.parentElement.querySelector('.input_validation-message').textContent = `❗️ ${message}`
+	input.classList.add('invalid')
+}
+
+const setValid = (input) => {
+	input.parentElement.querySelector('.input_validation-message').textContent = ""
+	input.classList.remove('invalid')
+}
+
+
+const emptyInput = (input) => {
+	return input.value == ""
+}
+
+const isNotText = (input) => {
+	let regex = /[^A-Za-zÀ-ÖØ-öø-ÿ0-9!?\.,:\ \-|()\'\"]+/
+	return {
+		value: regex.test(input.value),
+		reason: input.value.match(regex)
+	}
+}
+
+const noImages = (imageArray) => {
+	if (imageArray.length === 0) {
+		return true
+	} else {
+		return false
+	}
+}

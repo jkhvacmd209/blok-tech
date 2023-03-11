@@ -1,44 +1,3 @@
-const advertenties = [{
-		title: 'Locatie in Amsterdam',
-		description: 'Het Theo Thijssenhuis van de Hogeschool van Amsterdam',
-		images: [],
-		location: 'Amstelcampus Wibautstraat 2 TTH, 1091 GM Amsterdam, Nederland',
-		locationType: 'school',
-		locationSize: 33000,
-		services: {
-			parkingPlaces: 115,
-			electricity: true,
-			threePhaseElectricity: false,
-			water: true
-		},
-		contactInformation: {
-			fullName: 'Joppe Koops',
-			email: 'joppe.koops@hva.nl',
-			phone: ''
-		}
-	},
-	{
-		title: 'Locatie in centrum Amsterdam',
-		description: 'Het centraal station van Amsterdam',
-		images: [],
-		location: 'Stationsplein, 1012 AB Amsterdam',
-		locationType: 'station',
-		locationSize: 50000,
-		services: {
-			parkingPlaces: 0,
-			electricity: true,
-			threePhaseElectricity: false,
-			water: true
-		},
-		contactInformation: {
-			fullName: 'Joppe Koops',
-			email: 'joppe.koops@hva.nl',
-			phone: ''
-		}
-	}
-]
-
-
 const express = require('express')
 
 const app = express()
@@ -100,20 +59,30 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
 
-	async function getAdvertisements() {
+	// async function getAdvertisements() {
 
-		try {
-			let data = await collection.find({}).toArray()
-			return data
-		} catch {
-			return 'error'
-		}
+	// 	try {
+	// 		let data = await collection.find({}).toArray()
+	// 		return data
+	// 	} catch {
+	// 		return 'error'
+	// 	}
 
-	}
+	// }
 
-	getAdvertisements().then((data) => {
-		res.render('home', { pageTitle: 'Home', data: data })
-	})
+	// getAdvertisements().then((data) => {
+	// 	res.render('home', { pageTitle: 'Home', data: data })
+	// })
+
+	collection.find().toArray()
+		.then((advertisements) => {
+			console.log('succes');
+			res.render('home', { pageTitle: 'Home', data: advertisements })
+		})
+		.catch((err) => {
+			console.error(err);
+			res.send('err');
+		})
 
 
 })
