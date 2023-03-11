@@ -62,7 +62,7 @@ const imageInput = document.querySelector('#images')
 
 //set default step visibility
 
-goToStep(1)
+goToStep(4)
 
 
 
