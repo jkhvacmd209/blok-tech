@@ -56,8 +56,7 @@ label {
 	font-weight: bold;
 }
 
-input[type="checkbox"]+label,
-input[type="number"]+label {
+.input label {
 	display: inline;
 	font-size: 1em;
 	margin-left: 1ch;
@@ -86,19 +85,40 @@ input[type="tel"] {
 
 }
 
-input[type="number"] {
-	width: 6em;
-}
-
 input[type="checkbox"] {
 	scale: 1.5;
 	margin: .25em;
 	border: .5px solid black;
 }
 
+input#parking_places {
+	width: 6em;
+}
+
+input#location_size {
+	padding: .5em 2.5em .5em 1em;
+	width: 8em;
+}
+
 input#location_size+label {
 	position: relative;
 	left: -3em;
+	color: grey;
+	font-weight: normal;
+}
+
+input#phone {
+	padding: .5em 1em .5em 4.5em;
+}
+
+label:has(+input#phone) {
+	position: absolute;
+	padding: .5em 1em;
+	margin-left: 0;
+	color: grey;
+	border-right: 1px solid grey;
+	font-weight: normal;
+	line-height: 1.2;
 }
 
 .invalid {
@@ -215,12 +235,24 @@ button {
 	background-color: grey;
 }
 
+.form-navigation button:first-of-type {
+	display: none;
+}
+
+.form-navigation button:nth-of-type(2) {
+	display: none;
+}
+
 .form-navigation button:first-of-type:before {
 	content: '◀︎';
 }
 
 .form-navigation button:nth-of-type(2):after {
 	content: '▶︎';
+}
+
+.form-navigation button:nth-of-type(3):after {
+	content: '✓';
 }
 
 .input_validation-message {

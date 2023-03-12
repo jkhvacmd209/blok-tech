@@ -98,13 +98,22 @@
 		<div data-step="5">
 			<div class="form-group">
 				<label for="name">Naam</label>
-				<input type="text" name="name" id="name" autocomplete="name" required>
+				<div class="input">
+					<input type="text" name="name" id="name" autocomplete="name" required>
+					<span class="input_validation-message"></span>
+				</div>
 
 				<label for="email">E-mail Adres</label>
-				<input type="email" name="email" id="email" autocomplete="email" required>
+				<div class="input">
+					<input type="email" name="email" id="email" autocomplete="email" required>
+					<span class="input_validation-message"></span>
+				</div>
 
 				<label for="phone">Telefoon Nummer</label>
-				<input type="tel" name="phone" id="phone" autocomplete="tel" required>
+				<div class="input">
+					<label>+31</label><input type="tel" name="phone" id="phone" autocomplete="tel" required>
+					<span class="input_validation-message"></span>
+				</div>
 			</div>
 		</div>
 

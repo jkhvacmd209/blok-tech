@@ -62,7 +62,14 @@ const imageInput = document.querySelector('#images')
 const descriptionInput = document.querySelector('#description')
 const typeInput = document.querySelector('#location_type')
 const parkingInput = document.querySelector('#parking_places')
+const electricityCheckbox = document.querySelector('#electricity')
+const threePhaseElectricityCheckbox = document.querySelector('#three_phase_electricity')
+const waterCheckbox = document.querySelector('#water')
 const sizeInput = document.querySelector('#location_size')
+
+const nameInput = document.querySelector('#name')
+const emailInput = document.querySelector('#email')
+const phoneInput = document.querySelector('#phone')
 
 
 //set default step visibility
@@ -166,6 +173,71 @@ nextButton.addEventListener('click', () => {
 
 
 
+//validate last page and submit
+submitButton.addEventListener('click', (event) => {
+	event.preventDefault()
+
+	if (emptyInput(nameInput)) {
+		setInvalid(nameInput, 'Vul je naam in.')
+		return
+	}
+
+	setValid(nameInput)
+
+	if (emptyInput(emailInput)) {
+		setInvalid(emailInput, 'Vul je e-mail adres in.')
+		return
+	}
+
+	if (inputIsNotEmail(emailInput)) {
+		setInvalid(emailInput, 'Vul een juist e-mail adres in.')
+		return
+	}
+
+	setValid(emailInput)
+
+	if (emptyInput(phoneInput)) {
+		setInvalid(phoneInput, 'Vul je telefoon nummer in.')
+		return
+	}
+
+	if (inputIsNotPhoneNumber(phoneInput)) {
+		setInvalid(phoneInput, 'Vul een geldig telefoon nummer in.')
+		return
+	}
+
+	setValid(phoneInput)
+
+	let endPoint = '/fetch-post'
+	let formData = new FormData()
+
+	formData.append('title', titleInput.value)
+	formData.append('images', images)
+	formData.append('location', locationInput.value)
+	formData.append('description', descriptionInput.value)
+	formData.append('location_type', typeInput.value)
+	formData.append('parking_places', parkingInput.value)
+	formData.append('electricity', electricityCheckbox.checked)
+	formData.append('three_phase_electricity', threePhaseElectricityCheckbox.checked)
+	formData.append('water', waterCheckbox.checked)
+	formData.append('location_size', sizeInput.value)
+	formData.append('name', nameInput.value)
+	formData.append('email', emailInput.value)
+	formData.append('phone', phoneInput.value)
+
+	fetch(endPoint, {
+		method: 'POST',
+		body: formData
+	}).then(response => response.json()).then(data => {
+		if (data.success) {
+			console.log('success')
+		}
+	})
+
+})
+
+
+
 //go to previous step
 prevButton.addEventListener('click', () => {
 
@@ -211,6 +283,16 @@ const noImagesInArray = (imageArray) => {
 }
 
 const numberInputIsNegative = (input) => {
-	let regex = /^-\d+$/
+	let regex = /-\d/
 	return regex.test(input.value)
+}
+
+const inputIsNotEmail = (input) => {
+	let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+	return !regex.test(input.value)
+}
+
+const inputIsNotPhoneNumber = (input) => {
+	let regex = /^\d{9}$/
+	return !regex.test(input.value)
 }

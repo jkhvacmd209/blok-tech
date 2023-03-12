@@ -102,6 +102,14 @@ app.get('/plaats', (req, res) => {
 // })
 
 
+app.post('/fetch-post', upload.array('images'), (req, res) => {
+	console.log(req.body)
+	res.send({
+		success: true
+	})
+})
+
+
 /* Errors */
 
 app.use((req, res) => {
