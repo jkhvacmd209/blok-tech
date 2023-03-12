@@ -96,7 +96,7 @@ app.get('/plaats', (req, res) => {
 
 /* Verwerken van formulier */
 
-// app.post('/plaats-advertentie', upload.array('images'), (req, res) => {
+// app.post('/post', upload.array('images'), (req, res) => {
 // 	res.render('advertentie', { pageTitle: 'Advertentie', data: req.body, files: req.files })
 // })
 
