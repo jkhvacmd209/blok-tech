@@ -37,6 +37,26 @@ h2 {
 	margin-top: 1em;
 }
 
+.button,
+button {
+	background-color: darkolivegreen;
+	text-decoration: none;
+	border-radius: .5em;
+	color: white;
+	padding: .3em 1em;
+	display: block;
+	margin-bottom: 1em;
+	width: fit-content;
+	white-space: nowrap;
+	border: none;
+	font-size: 1em;
+}
+
+.button.secondary,
+button.secondary {
+	background-color: grey;
+}
+
 [data-step] {
 	margin-bottom: 5em;
 }
@@ -226,14 +246,12 @@ button {
 
 .form-navigation button {
 	flex-basis: 100%;
-	border: none;
-	background-color: darkolivegreen;
-	color: white;
-	font-size: 1em;
 	display: flex;
 	gap: 1ch;
 	justify-content: center;
 	align-items: center;
+	height: 100%;
+	border-radius: 0;
 }
 
 .form-navigation button:active {
