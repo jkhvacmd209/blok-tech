@@ -57,6 +57,11 @@ button.secondary {
 	background-color: grey;
 }
 
+.button:active,
+button:active {
+	background-color: grey;
+}
+
 [data-step] {
 	margin-bottom: 5em;
 }
@@ -150,12 +155,8 @@ label.phone-number_prefix {
 
 .image-list {
 	display: grid;
-	grid-template-columns: 1fr;
-	gap: 1em;
-}
-
-.image-list:has(div:nth-of-type(2)) {
 	grid-template-columns: 1fr 1fr;
+	gap: 1em;
 }
 
 .image-list img {
@@ -252,10 +253,6 @@ button {
 	align-items: center;
 	height: 100%;
 	border-radius: 0;
-}
-
-.form-navigation button:active {
-	background-color: grey;
 }
 
 .form-navigation button:first-of-type {

@@ -76,12 +76,11 @@ app.get('/', (req, res) => {
 
 	collection.find().toArray()
 		.then((advertisements) => {
-			console.log('succes');
 			res.render('home', { pageTitle: 'Home', data: advertisements })
 		})
 		.catch((err) => {
-			console.error(err);
-			res.send('err');
+			console.error(err)
+			res.send('err')
 		})
 
 
@@ -103,7 +102,27 @@ app.get('/plaats', (req, res) => {
 
 
 app.post('/fetch-post', upload.array('images'), (req, res) => {
-	console.log(req.body)
+
+	collection.insertOne({
+		title: req.body.title,
+		description: req.body.description,
+		images: req.body.images,
+		location: req.body.location,
+		locationType: req.body.location_type,
+		locationSize: req.body.location_size,
+		services: {
+			parkingPlaces: req.body.parking_places,
+			electricity: req.body.electricity,
+			threePhaseElectricity: req.body.three_phase_electricity,
+			water: req.body.water,
+		},
+		contactInformation: {
+			fullName: req.body.name,
+			email: req.body.email,
+			phone: `+31 ${req.body.phone}`
+		}
+	}).catch(err => console.error(err))
+
 	res.send({
 		success: true
 	})
