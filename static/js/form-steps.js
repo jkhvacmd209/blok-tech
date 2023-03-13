@@ -209,6 +209,8 @@ const submitForm = (event) => {
 
 	setValid(phoneInput)
 
+	submitButton.classList.add('loading');
+
 	//Fetch variables
 
 	let endPoint = '/fetch-post'
@@ -237,9 +239,11 @@ const submitForm = (event) => {
 		body: formData
 	}).then(response => response.json()).then(data => {
 		if (data.success) {
-			console.log('success')
+			console.log(data)
+			submitButton.classList.remove('loading')
 		}
 	})
+
 }
 
 
