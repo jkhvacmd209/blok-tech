@@ -1,10 +1,10 @@
 //place buttons above keyboard
 
-const controls = document.querySelector('.form-navigation')
+// const controls = document.querySelector('.form-navigation')
 
-window.visualViewport.addEventListener('resize', () => {
-	controls.style.top = window.visualViewport.height - controls.height + 'px'
-})
+// window.visualViewport.addEventListener('resize', () => {
+// 	controls.style.top = window.visualViewport.height - controls.height + 'px'
+// })
 
 
 //variable for keeping check of step
@@ -47,6 +47,7 @@ const goToStep = (step) => {
 //get steps and buttons
 
 const steps = document.querySelectorAll('[data-step]')
+const controls = document.querySelector('.form-navigation')
 
 const prevButton = controls.querySelector('button:first-of-type')
 const nextButton = controls.querySelector('button:nth-of-type(2)')
@@ -208,8 +209,12 @@ submitButton.addEventListener('click', (event) => {
 
 	setValid(phoneInput)
 
+	//Fetch variables
+
 	let endPoint = '/fetch-post'
 	let formData = new FormData()
+
+	//Set form data
 
 	formData.append('title', titleInput.value)
 	formData.append('images', images)
@@ -224,6 +229,8 @@ submitButton.addEventListener('click', (event) => {
 	formData.append('name', nameInput.value)
 	formData.append('email', emailInput.value)
 	formData.append('phone', phoneInput.value)
+
+	//Post form with fetch
 
 	fetch(endPoint, {
 		method: 'POST',
