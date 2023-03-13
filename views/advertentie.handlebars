@@ -1,9 +1,9 @@
 <main>
-	<a href="/"><-- Terug naar resultaten</a>
+	<a href="/" class="button secondary">← Terug</a>
 	<h1>{{data.title}}</h1>
 
-	{{#each files}}
-		<img src="/upload/{{this.filename}}" width="100%"/>
+	{{#each images}}
+		<img src="/upload/{{this}}" width="100%"/>
 	{{/each}}
 
 	<h2>Omschrijving</h2>
@@ -11,22 +11,27 @@
 
 	<h2>Eigenschappen</h2>
 	<ul>
-		<li>Type: {{data.location_type}}</li>
-		<li>Grootte: {{data.location_size}} m<sup>2</sup></li>
+		<li>Type: {{data.locationType}}</li>
+		<li>Grootte: {{data.locationSize}} m<sup>2</sup></li>
 	</ul>
 
 	<h2>Voorzieningen</h2>
 
 	<ul>
-		{{#if data.water}}
+		{{#if data.services.water}}
 			<li>Water</li>
 		{{/if}}
-		{{#if data.electricity}}
+		{{#if data.services.electricity}}
 			<li>Electriciteit</li>
 		{{/if}}
-		{{#if data.three_phase_electricity}}
+		{{#if data.services.three_phase_electricity}}
 			<li>Krachtstroom</li>
 		{{/if}}
-		<li>Aantal parkeer plaatsen: {{data.parking_places}}</li>
+		<li>Aantal parkeer plaatsen: {{data.services.parking_places}}</li>
 	</ul>
+
+	<h2>Neem contact op met de eigenaar</h2>
+	<p>{{data.contactInformation.name}}</p>
+	<a href="mailto:{{data.contactInformation.email}}">✉︎ {{data.contactInformation.email}}</a>
+	<a href="tel:{{data.contactInformation.phone}}">☏ {{data.contactInformation.phone}}</a>
 </main>

@@ -36,10 +36,9 @@ let imageID = 0
 
 const storage = multer.diskStorage({
 	destination: (req, file, callback) => {
-		callback(null, `static/upload/${req.body.title}/`)
+		callback(null, 'static/upload/')
 	},
 	filename: (req, file, callback) => {
-		console.log(file)
 		callback(null, `${imageID}.${file.mimetype.split('/')[1]}`)
 		imageID++
 	}
@@ -76,7 +75,10 @@ app.get('/', (req, res) => {
 
 	collection.find().toArray()
 		.then((advertisements) => {
-			res.render('home', { pageTitle: 'Home', data: advertisements })
+			let sortedAdvertisements = advertisements.sort((current, next) => {
+				return new Date(next.time) - new Date(current.time)
+			})
+			res.render('home', { pageTitle: 'Home', data: sortedAdvertisements })
 		})
 		.catch((err) => {
 			console.error(err)
@@ -84,6 +86,14 @@ app.get('/', (req, res) => {
 		})
 
 
+})
+
+app.get('/advertentie/:id', (req, res) => {
+	collection.findOne({ _id: req.params.id })
+		.then((advertisement) => {
+			console.log(advertisement)
+			res.render('advertentie', { data: advertisement })
+		})
 })
 
 
@@ -94,16 +104,12 @@ app.get('/plaats', (req, res) => {
 })
 
 
-/* Verwerken van formulier */
+/* Verwerk formulier */
 
-// app.post('/post', upload.array('images'), (req, res) => {
-// 	res.render('advertentie', { pageTitle: 'Advertentie', data: req.body, files: req.files })
-// })
-
-
-app.post('/fetch-post', upload.array('images'), (req, res) => {
+app.post('/post', upload.array('images'), (req, res) => {
 
 	collection.insertOne({
+			time: new Date(),
 			title: req.body.title,
 			description: req.body.description,
 			images: req.body.images,
@@ -114,7 +120,7 @@ app.post('/fetch-post', upload.array('images'), (req, res) => {
 				parkingPlaces: req.body.parking_places,
 				electricity: req.body.electricity,
 				threePhaseElectricity: req.body.three_phase_electricity,
-				water: req.body.water,
+				water: req.body.water
 			},
 			contactInformation: {
 				fullName: req.body.name,
@@ -123,12 +129,17 @@ app.post('/fetch-post', upload.array('images'), (req, res) => {
 			}
 		})
 		.then((result) => {
-			res.send({
-				success: true,
-				advertisementID: result.insertedID
-			})
+
+			if (req.headers.accept.includes('application/json')) {
+				res.send({
+					success: true,
+					advertisementID: result.insertedId
+				})
+			} else {
+				res.redirect(`/advertentie/${result.insertedId}`)
+			}
+
 		})
-		.catch()
 })
 
 

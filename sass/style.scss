@@ -63,6 +63,7 @@ button {
 	white-space: nowrap;
 	border: none;
 	font-size: 1em;
+	cursor: pointer;
 }
 
 .button.secondary,
@@ -83,21 +84,15 @@ button:active {
 	margin-bottom: 3em;
 }
 
-.input {
-	margin-bottom: 1em;
-	margin-top: .5em;
-}
-
 label {
 	display: block;
 	font-size: 1.2em;
 	font-weight: bold;
 }
 
-.input label {
-	display: inline;
-	font-size: 1em;
-	margin-left: 1ch;
+.input {
+	margin-bottom: 1em;
+	margin-top: .5em;
 }
 
 input,
@@ -138,6 +133,12 @@ input[type="checkbox"] {
 	margin: .25em;
 }
 
+.input label {
+	display: inline;
+	font-size: 1em;
+	margin-left: 1ch;
+}
+
 input#parking_places {
 	width: 6em;
 }
@@ -165,10 +166,6 @@ label.phone-number_prefix {
 	color: grey;
 	border-right: 1px solid var(--input-border-color);
 	font-weight: normal;
-}
-
-.invalid {
-	outline: 1px solid var(--invalid-color);
 }
 
 .image-list {
@@ -233,8 +230,13 @@ textarea {
 	resize: vertical;
 }
 
-button {
-	cursor: pointer;
+.invalid {
+	outline: 1px solid var(--invalid-color);
+}
+
+.input_validation-message {
+	color: var(--invalid-color);
+	display: block;
 }
 
 .form-navigation {
@@ -277,12 +279,7 @@ button {
 	content: '✓';
 }
 
-.input_validation-message {
-	color: var(--invalid-color);
-	display: block;
-}
-
-.fomr-navigation button.loading {
+.form-navigation button.loading {
 	background-color: var(--secondary-color);
 }
 

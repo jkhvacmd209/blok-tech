@@ -213,13 +213,17 @@ const submitForm = (event) => {
 
 	//Fetch variables
 
-	let endPoint = '/fetch-post'
+	let endPoint = '/post'
 	let formData = new FormData()
 
 	//Set form data
 
 	formData.append('title', titleInput.value)
-	formData.append('images', images)
+
+	images.forEach(image => {
+		formData.append('images', image)
+	})
+
 	formData.append('location', locationInput.value)
 	formData.append('description', descriptionInput.value)
 	formData.append('location_type', typeInput.value)
@@ -236,6 +240,9 @@ const submitForm = (event) => {
 
 	fetch(endPoint, {
 		method: 'POST',
+		headers: {
+			Accept: 'application/json'
+		},
 		body: formData
 	}).then(response => response.json()).then(data => {
 		if (data.success) {
