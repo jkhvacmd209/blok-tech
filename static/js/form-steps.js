@@ -77,11 +77,10 @@ const phoneInput = document.querySelector('#phone')
 
 goToStep(1)
 
+//Form control functions
 
-
-//go to next step and validate current step
-nextButton.addEventListener('click', () => {
-
+//Go to next step
+const goToNextStep = () => {
 	switch (currentStep) {
 		case 1:
 
@@ -168,14 +167,15 @@ nextButton.addEventListener('click', () => {
 
 			break
 	}
+}
 
-
-})
-
-
+//go to previous step
+const goToPrevStep = () => {
+	goToStep(currentStep - 1)
+}
 
 //validate last page and submit
-submitButton.addEventListener('click', (event) => {
+const submitForm = (event) => {
 	event.preventDefault()
 
 	if (emptyInput(nameInput)) {
@@ -240,16 +240,36 @@ submitButton.addEventListener('click', (event) => {
 			console.log('success')
 		}
 	})
+}
 
+
+//Eventlisteners for form steps
+
+nextButton.addEventListener('click', () => {
+	goToNextStep()
 })
 
+submitButton.addEventListener('click', (event) => {
+	submitForm(event)
+})
 
-
-//go to previous step
 prevButton.addEventListener('click', () => {
+	goToPrevStep()
+})
 
-	goToStep(currentStep - 1)
+window.addEventListener('keydown', (event) => {
+	if (event.keyCode === 13) {
+		event.preventDefault()
 
+		switch (currentStep) {
+			case 5:
+				submitForm()
+				break
+			default:
+				goToNextStep()
+		}
+
+	}
 })
 
 
