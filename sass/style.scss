@@ -50,6 +50,38 @@ h2 {
 	margin-top: 1em;
 }
 
+.advertisement {
+	background-color: white;
+	margin-bottom: 1em;
+	display: grid;
+	grid-template-columns: 6em 1fr;
+	column-gap: 1em;
+	height: 6em;
+}
+
+.advertisement .info {
+	grid-column: 2;
+	margin-top: .5em;
+	margin-right: .5em;
+}
+
+.advertisement p {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 2;
+	hyphens: auto;
+	overflow: hidden;
+}
+
+.advertisement img {
+	grid-column: 1;
+	grid-row: 1;
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+
 .button,
 button {
 	background-color: var(--primary-color);
