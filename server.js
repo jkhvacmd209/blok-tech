@@ -25,6 +25,7 @@ client.connect((err) => {
 	if(err) {
 		throw err
 	}
+	console.log('Succesfully connected to database')
 })
 
 const db = client.db(process.env.DB_NAME)
@@ -54,21 +55,6 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
 
-	// async function getAdvertisements() {
-
-	// 	try {
-	// 		let data = await collection.find({}).toArray()
-	// 		return data
-	// 	} catch {
-	// 		return 'error'
-	// 	}
-
-	// }
-
-	// getAdvertisements().then((data) => {
-	// 	res.render('home', { pageTitle: 'Home', data: data })
-	// })
-
 	collection.find().toArray()
 		.then((advertisements) => {
 			let sortedAdvertisements = advertisements.sort((current, next) => {
@@ -88,7 +74,6 @@ app.get('/', (req, res) => {
 app.get('/advertentie/:id', (req, res) => {
 	collection.findOne({ _id: new ObjectId(req.params.id) })
 		.then((advertisement) => {
-			console.log(advertisement)
 			res.render('advertentie', {
 				data: advertisement
 			})

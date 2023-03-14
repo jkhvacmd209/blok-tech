@@ -2,7 +2,7 @@
 	<a href="/" class="button secondary">← Terug</a>
 	<h1>{{data.title}}</h1>
 
-	{{#each images}}
+	{{#each data.images}}
 		<img src="/upload/{{this}}" width="100%"/>
 	{{/each}}
 
@@ -24,10 +24,10 @@
 		{{#if data.services.electricity}}
 			<li>Electriciteit</li>
 		{{/if}}
-		{{#if data.services.three_phase_electricity}}
+		{{#if data.services.threePhaseElectricity}}
 			<li>Krachtstroom</li>
 		{{/if}}
-		<li>Aantal parkeer plaatsen: {{data.services.parking_places}}</li>
+		<li>Aantal parkeer plaatsen: {{data.services.parkingPlaces}}</li>
 	</ul>
 
 	<h2>Neem contact op met de eigenaar</h2>

@@ -1,13 +1,4 @@
-//place buttons above keyboard
-
-// const controls = document.querySelector('.form-navigation')
-
-// window.visualViewport.addEventListener('resize', () => {
-// 	controls.style.top = window.visualViewport.height - controls.height + 'px'
-// })
-
-
-//variable for keeping check of step
+//variable for keeping track of step
 
 let currentStep = 1
 
@@ -247,6 +238,7 @@ const submitForm = (event) => {
 	}).then(response => response.json()).then(data => {
 		if(data.success) {
 			submitButton.classList.remove('loading')
+			window.location.href = `/advertentie/${data.advertisementID}`
 		}
 	})
 
