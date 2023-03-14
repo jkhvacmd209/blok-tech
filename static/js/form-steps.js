@@ -246,7 +246,6 @@ const submitForm = (event) => {
 		body: formData
 	}).then(response => response.json()).then(data => {
 		if(data.success) {
-			console.log(data)
 			submitButton.classList.remove('loading')
 		}
 	})
