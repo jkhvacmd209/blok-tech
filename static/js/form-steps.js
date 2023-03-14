@@ -84,12 +84,12 @@ const goToNextStep = () => {
 	switch (currentStep) {
 		case 1:
 
-			if (emptyInput(titleInput)) {
+			if(emptyInput(titleInput)) {
 				setInvalid(titleInput, 'Je moet een titel invullen!')
 				break
 			}
 
-			if (inputIsNotText(titleInput).value) {
+			if(inputIsNotText(titleInput).value) {
 				setInvalid(titleInput, `${inputIsNotText(titleInput).reason} is niet toegestaan.`)
 				break
 			}
@@ -101,7 +101,7 @@ const goToNextStep = () => {
 
 		case 2:
 
-			if (noImagesInArray(images)) {
+			if(noImagesInArray(images)) {
 				setInvalid(imageInput, 'Je moet minstens één afbeelding toevoegen!')
 				break
 			}
@@ -119,43 +119,43 @@ const goToNextStep = () => {
 
 		case 4:
 
-			if (emptyInput(descriptionInput)) {
+			if(emptyInput(descriptionInput)) {
 				setInvalid(descriptionInput, 'Vergeet niet een omschrijving te geven!')
 				break
 			}
 
-			if (inputIsNotText(descriptionInput).value) {
+			if(inputIsNotText(descriptionInput).value) {
 				setInvalid(descriptionInput, `${inputIsNotText(descriptionInput).reason} is niet toegestaan.`)
 				break
 			}
 
 			setValid(descriptionInput)
 
-			if (emptyInput(typeInput)) {
+			if(emptyInput(typeInput)) {
 				setInvalid(typeInput, 'Vergeet niet je locatie type op te geven!')
 				break
 			}
 
 			setValid(typeInput)
 
-			if (emptyInput(parkingInput)) {
+			if(emptyInput(parkingInput)) {
 				setInvalid(parkingInput, 'Je moet een aantal parkeerplekken opgeven.')
 				break
 			}
 
-			if (numberInputIsNegative(parkingInput)) {
+			if(numberInputIsNegative(parkingInput)) {
 				setInvalid(parkingInput, 'Het aantal parkeerplekken mag niet negatief zijn.')
 				break
 			}
 
 			setValid(parkingInput)
 
-			if (emptyInput(sizeInput)) {
+			if(emptyInput(sizeInput)) {
 				setInvalid(sizeInput, 'Je moet de grootte van de locatie opgeven.')
 				break
 			}
 
-			if (numberInputIsNegative(sizeInput)) {
+			if(numberInputIsNegative(sizeInput)) {
 				setInvalid(sizeInput, 'De grootte mag niet negatief zijn.')
 				break
 			}
@@ -178,31 +178,31 @@ const goToPrevStep = () => {
 const submitForm = (event) => {
 	event.preventDefault()
 
-	if (emptyInput(nameInput)) {
+	if(emptyInput(nameInput)) {
 		setInvalid(nameInput, 'Vul je naam in.')
 		return
 	}
 
 	setValid(nameInput)
 
-	if (emptyInput(emailInput)) {
+	if(emptyInput(emailInput)) {
 		setInvalid(emailInput, 'Vul je e-mail adres in.')
 		return
 	}
 
-	if (inputIsNotEmail(emailInput)) {
+	if(inputIsNotEmail(emailInput)) {
 		setInvalid(emailInput, 'Vul een juist e-mail adres in.')
 		return
 	}
 
 	setValid(emailInput)
 
-	if (emptyInput(phoneInput)) {
+	if(emptyInput(phoneInput)) {
 		setInvalid(phoneInput, 'Vul je telefoon nummer in.')
 		return
 	}
 
-	if (inputIsNotPhoneNumber(phoneInput)) {
+	if(inputIsNotPhoneNumber(phoneInput)) {
 		setInvalid(phoneInput, 'Vul een geldig telefoon nummer in.')
 		return
 	}
@@ -245,7 +245,7 @@ const submitForm = (event) => {
 		},
 		body: formData
 	}).then(response => response.json()).then(data => {
-		if (data.success) {
+		if(data.success) {
 			console.log(data)
 			submitButton.classList.remove('loading')
 		}
@@ -269,7 +269,7 @@ prevButton.addEventListener('click', () => {
 })
 
 window.addEventListener('keydown', (event) => {
-	if (event.keyCode === 13) {
+	if(event.keyCode === 13) {
 		event.preventDefault()
 
 		switch (currentStep) {
@@ -293,7 +293,7 @@ const setInvalid = (input, message) => {
 }
 
 const setValid = (input) => {
-	input.parentElement.querySelector('.input_validation-message').textContent = ""
+	input.parentElement.querySelector('.input_validation-message').textContent = ''
 	input.classList.remove('invalid')
 }
 
@@ -301,11 +301,11 @@ const setValid = (input) => {
 /* Form validation check functions */
 
 const emptyInput = (input) => {
-	return input.value == ""
+	return input.value == ''
 }
 
 const inputIsNotText = (input) => {
-	let regex = /[^A-Za-zÀ-ÖØ-öø-ÿ0-9!?\.,:\ \-|()\'\"\n]+/
+	let regex = /[^A-Za-zÀ-ÖØ-öø-ÿ0-9!?\.,:\ \-|()'"\n]+/
 	return {
 		value: regex.test(input.value),
 		reason: input.value.match(regex)
@@ -313,7 +313,7 @@ const inputIsNotText = (input) => {
 }
 
 const noImagesInArray = (imageArray) => {
-	if (imageArray.length === 0) {
+	if(imageArray.length === 0) {
 		return true
 	} else {
 		return false

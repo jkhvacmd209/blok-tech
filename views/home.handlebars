@@ -3,11 +3,9 @@
 	<h1>Advertenties</h1>
 	{{#each data}}
 	<div class="advertisement">
-		<div class="info">
 			<a href="/advertentie/{{this._id}}"><h3>{{this.title}}</h3></a>
 			<p>{{this.description}}</p>
-		</div>
-		<img src="/upload/1.jpeg" alt="">
+		<img src="/upload/{{this.images.[0]}}" alt="">
 	</div>
 	{{/each}}
 </main>
