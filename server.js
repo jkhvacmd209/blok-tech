@@ -1,44 +1,3 @@
-const advertenties = [{
-		title: 'Locatie in Amsterdam',
-		description: 'Het Theo Thijssenhuis van de Hogeschool van Amsterdam',
-		images: [],
-		location: 'Amstelcampus Wibautstraat 2 TTH, 1091 GM Amsterdam, Nederland',
-		locationType: 'school',
-		locationSize: 33000,
-		services: {
-			parkingPlaces: 115,
-			electricity: true,
-			threePhaseElectricity: false,
-			water: true
-		},
-		contactInformation: {
-			fullName: 'Joppe Koops',
-			email: 'joppe.koops@hva.nl',
-			phone: ''
-		}
-	},
-	{
-		title: 'Locatie in centrum Amsterdam',
-		description: 'Het centraal station van Amsterdam',
-		images: [],
-		location: 'Stationsplein, 1012 AB Amsterdam',
-		locationType: 'station',
-		locationSize: 50000,
-		services: {
-			parkingPlaces: 0,
-			electricity: true,
-			threePhaseElectricity: false,
-			water: true
-		},
-		contactInformation: {
-			fullName: 'Joppe Koops',
-			email: 'joppe.koops@hva.nl',
-			phone: ''
-		}
-	}
-]
-
-
 const express = require('express')
 
 const app = express()
@@ -55,95 +14,140 @@ app.set('views', './views')
 const dotenv = require('dotenv')
 dotenv.config()
 
+const { MongoClient } = require('mongodb')
+const ObjectId = require('mongodb').ObjectId
 
-const multer = require('multer')
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
 
-let imageID = 0
+const client = new MongoClient(uri)
 
-const storage = multer.diskStorage({
-	destination: (req, file, callback) => {
-		callback(null, `static/upload/${req.body.title}/`)
-	},
-	filename: (req, file, callback) => {
-		console.log(file)
-		callback(null, `${imageID}.${file.mimetype.split('/')[1]}`)
-		imageID++
+client.connect((err) => {
+	if(err) {
+		throw err
 	}
-})
-
-const { MongoClient, ServerApiVersion } = require('mongodb')
-
-const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/?retryWrites=true&w=majority`
-
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
-
-client.connect(err => {
-	if (err) { throw err }
+	console.log('Succesfully connected to database')
 })
 
 const db = client.db(process.env.DB_NAME)
+const collection = db.collection('advertisements')
 
-const upload = multer({ storage: storage })
+const multer = require('multer')
 
+const storage = multer.diskStorage({
+	destination: (req, file, callback) => {
+		callback(null, 'static/upload/')
+	},
+	filename: (req, file, callback) => {
+		callback(null, file.originalname)
+	},
+})
+
+const upload = multer({
+	storage: storage
+})
 
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
-
-
 
 /* --- ROUTING --- */
 
 /* Home pagina */
 
 app.get('/', (req, res) => {
-	res.render('home', { pageTitle: 'Home', data: advertenties })
+
+	collection.find().toArray()
+		.then((advertisements) => {
+			let sortedAdvertisements = advertisements.sort((current, next) => {
+				return new Date(next.time) - new Date(current.time)
+			})
+			res.render('home', {
+				pageTitle: 'Home',
+				data: sortedAdvertisements
+			})
+		})
+		.catch((err) => {
+			console.error(err)
+			res.send('err')
+		})
 })
 
+app.get('/advertentie/:id', (req, res) => {
+	collection.findOne({ _id: new ObjectId(req.params.id) })
+		.then((advertisement) => {
+			res.render('advertentie', {
+				data: advertisement
+			})
+		})
+})
 
 /* Plaats formulier */
 
 app.get('/plaats', (req, res) => {
-	res.render('plaats', { pageTitle: 'Plaats een advertentie', mapsApiKey: process.env.MAPS_API_KEY })
+	res.render('plaats', {
+		pageTitle: 'Plaats een advertentie',
+		mapsApiKey: process.env.MAPS_API_KEY
+	})
 })
 
+/* Verwerk formulier */
 
-/* Verwerken van formulier */
-
-// app.post('/plaats-advertentie', upload.array('images'), (req, res) => {
-// 	res.render('advertentie', { pageTitle: 'Advertentie', data: req.body, files: req.files })
-// })
-
-app.get('/plaats-advertentie', (req, res) => {
-
-	function done(err, data) {
-		console.log('functie werkt')
-		if (err) {
-			console.log(err)
-		} else {
-			console.log(data)
-			res.send('test')
+app.post('/post', upload.array('images'), (req, res) => {
+	const checkboxToBool = (value) => {
+		if(typeof value === 'string') {
+			if(value === 'on') {
+				return true
+			} else {
+				return false
+			}
 		}
 	}
 
-	console.log('there was a request')
+	let images = []
 
-	db.collection('advertisements').find().toArray(done)
+	req.files.forEach((file) => {
+		images.push(file.filename)
+	})
 
-
+	collection.insertOne({
+			time: new Date(),
+			title: req.body.title,
+			description: req.body.description,
+			images: images,
+			location: req.body.location,
+			locationType: req.body.location_type,
+			locationSize: req.body.location_size,
+			services: {
+				parkingPlaces: req.body.parking_places,
+				electricity: checkboxToBool(req.body.electricity),
+				threePhaseElectricity: checkboxToBool(req.body.three_phase_electricity),
+				water: checkboxToBool(req.body.water)
+			},
+			contactInformation: {
+				fullName: req.body.name,
+				email: req.body.email,
+				phone: `+31 ${req.body.phone}`
+			}
+		})
+		.then((result) => {
+			if(req.headers.accept.includes('application/json')) {
+				res.send({
+					success: true,
+					advertisementID: result.insertedId
+				})
+			} else {
+				res.redirect(`/advertentie/${result.insertedId}`)
+			}
+		})
 })
-
 
 /* Errors */
 
 app.use((req, res) => {
 	res.status(404)
-	res.render('error', { pageTitle: 'Error: 404 Not Found' })
+	res.render('error', {
+		pageTitle: 'Error: 404 Not Found'
+	})
 })
-
-
-
-
-
 
 app.listen(port, () => {
 	console.log(`Yes! The server is running and listening on port ${port}`)

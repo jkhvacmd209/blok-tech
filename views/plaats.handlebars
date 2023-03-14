@@ -1,10 +1,12 @@
 <main>
+
+	<a href="/" class="button secondary">← Terug</a>
 	<h1>Plaats een advertentie</h1>
-	<form action="/plaats-advertentie" method="post" enctype="multipart/form-data">
+	<form action="/post" method="post" enctype="multipart/form-data">
 
 		<div data-step="1">
 			<div class="form-group">
-				<label for="title">Geef een titel</label>
+				<label for="title">Advertentie titel</label>
 				<div class="input">
 					<input type="text" name="title" id="title" autocomplete="off" required>
 					<span class="input_validation-message"></span>
@@ -18,7 +20,8 @@
 				<label for="images">Voeg afbeeldingen toe</label>
 				<div class="input file-input">
 					<div class="image-list"></div>
-					<input type="file" name="images" id="images" multiple accept="image/">
+					<input type="file" name="images" id="images" multiple accept="image/*" required>
+					<span class="input_validation-message"></span>
 				</div>
 				<p>Voeg zowel foto's toe van de gehele locatie als van belangrijke detail.</p>
 			</div>
@@ -27,28 +30,48 @@
 		<div data-step="3">
 			<div class="form-group">
 				<label for="location">Waar is je locatie?</label>
-				<input type="text" name="location" id="location" autocomplete="off" required>
-				<p>Het adres van de locatie is niet direct zichtbaar in de advertentie</p>
+				<div class="input">
+					<input type="text" name="location" id="location" autocomplete="off" required>
+					<span class="input_validation-message"></span>
+				</div>
+				<p>Het adres van de locatie is niet direct zichtbaar in de advertentie.</p>
 			</div>
 		</div>
 
 		<div data-step="4">
 			<div class="form-group">
 				<label for="description">Beschrijving</label>
-				<textarea name="description" id="description" required></textarea>
 
+				<div class="input">
+					<textarea name="description" id="description" rows="8" required></textarea>
+					<span class="input_validation-message"></span>
+				</div>
+				<p>Geef een beschrijving van daarin de locatie. Omschrijf bijvoorbeeld de periode waarin de stijl van de locatie past en geef belangrijke details.</p>
+			</div>
+
+			<div class="form-group">
 				<label for="location_type">Type Locatie</label>
-				<select name="location_type" id="location_type">
-					<option value="woonhuis">Woonhuis</option>
-					<option value="winkel">Winkel</option>
-					<option value="kantoor">Kantoor</option>
-					<option value="studio">Studio</option>
-				</select>
 
+				<div class="input">
+					<select name="location_type" id="location_type" required>
+						<option disabled selected value="">Kies...</option>
+						<option value="woonhuis">Woonhuis</option>
+						<option value="winkel">Winkel</option>
+						<option value="kantoor">Kantoor</option>
+						<option value="studio">Studio</option>
+					</select>
+					<span class="input_validation-message"></span>
+				</div>
+
+			</div>
+
+
+			<div class="form-group">
 				<label for="">Voorzieningen</label>
 				<div class="input">
-					<input type="number" name="parking_places" id="parking_places" required>
+					<input type="number" name="parking_places" id="parking_places" required min="0" value="0">
 					<label for="parking_places">Aantal parkeerplekken</label>
+					<span class="input_validation-message"></span>
 				</div>
 				<div class="input">
 					<input type="checkbox" name="electricity" id="electricity">
@@ -59,24 +82,40 @@
 					<label for="three_phase_electricity">Krachtstroom</label>
 				</div>
 				<div class="input">
-					<input type="checkbox" name="water" id="water"><label for="water">Water</label>
+					<input type="checkbox" name="water" id="water">
+					<label for="water">Water</label>
 				</div>
+			</div>
 
+			<div class="form-group">
 				<label for="location_size">Groote van Locatie</label>
-				<input type="number" name="location_size" id="location_size" required><label>m<sup>2</sup></label>
+				<div class="input">
+					<input type="number" name="location_size" id="location_size" required min="0">
+					<label>m<sup>2</sup></label>
+					<span class="input_validation-message"></span>
+				</div>
 			</div>
 		</div>
 
 		<div data-step="5">
 			<div class="form-group">
 				<label for="name">Naam</label>
-				<input type="text" name="name" id="name" autocomplete="name" required>
+				<div class="input">
+					<input type="text" name="name" id="name" autocomplete="name" required>
+					<span class="input_validation-message"></span>
+				</div>
 
 				<label for="email">E-mail Adres</label>
-				<input type="email" name="email" id="email" autocomplete="email" required>
+				<div class="input">
+					<input type="email" name="email" id="email" autocomplete="email" required>
+					<span class="input_validation-message"></span>
+				</div>
 
 				<label for="phone">Telefoon Nummer</label>
-				<input type="tel" name="phone" id="phone" autocomplete="tel" required>
+				<div class="input">
+					<label class="phone-number_prefix">+31</label><input type="tel" name="phone" id="phone" autocomplete="tel" required>
+					<span class="input_validation-message"></span>
+				</div>
 			</div>
 		</div>
 
@@ -92,7 +131,7 @@
 
 <script type="text/javascript" src="js/add-image.js"></script>
 
-<script type="text/javascript" src="js/pagination.js"></script>
+<script type="text/javascript" src="js/form-steps.js"></script>
 
 <script type="text/javascript" src="js/location-autocomplete.js"></script>
 
