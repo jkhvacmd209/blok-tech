@@ -25,8 +25,9 @@ client.connect((err) => {
 	if(err) {
 		throw err
 	}
-	console.log('Succesfully connected to database')
 })
+
+console.log('Succesfully connected to database')
 
 const db = client.db(process.env.DB_NAME)
 const collection = db.collection('advertisements')
@@ -92,9 +93,10 @@ app.get('/plaats', (req, res) => {
 /* Verwerk formulier */
 
 app.post('/post', upload.array('images'), (req, res) => {
+
 	const checkboxToBool = (value) => {
 		if(typeof value === 'string') {
-			if(value === 'on') {
+			if(value === 'on' || value === 'true') {
 				return true
 			} else {
 				return false
