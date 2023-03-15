@@ -1,7 +1,12 @@
+/* --- EXPRESS --- */
+
 const express = require('express')
 
 const app = express()
 const port = 3000
+
+
+/* --- HANDLEBARS --- */
 
 const { engine } = require('express-handlebars')
 
@@ -11,11 +16,21 @@ app.set('view engine', 'handlebars')
 
 app.set('views', './views')
 
+// Source: https://stackoverflow.com/a/69962894
+
+
+/* --- DOTENV --- */
+
 const dotenv = require('dotenv')
 dotenv.config()
 
+// Source: https://www.npmjs.com/package/dotenv
+
+
+/* --- MONGODB --- */
+
 const { MongoClient } = require('mongodb')
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongodb').ObjectId //Source: https://stackoverflow.com/a/29231016
 
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
 
@@ -32,6 +47,9 @@ console.log('Succesfully connected to database')
 const db = client.db(process.env.DB_NAME)
 const collection = db.collection('advertisements')
 
+
+/* --- MULTER --- */
+
 const multer = require('multer')
 
 const storage = multer.diskStorage({
@@ -47,8 +65,17 @@ const upload = multer({
 	storage: storage
 })
 
+// Source: https://www.youtube.com/watch?v=wIOpe8S2Mk8
+
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
+
+
+/* --- VALIDATION FUNCTIONS ---*/
+
+const checkboxToBool = (value) => typeof value === 'string' ? value === 'on' || value === 'true' ? true : false : false
+
+const isObjectIdValid = (id) => ObjectId.isValid(id) ? String(new ObjectId(id) === id) ? true : false : false // Source: https://stackoverflow.com/a/29231016
 
 /* --- ROUTING --- */
 
@@ -72,13 +99,27 @@ app.get('/', (req, res) => {
 		})
 })
 
+/* Advertentie pagina */
+
 app.get('/advertentie/:id', (req, res) => {
-	collection.findOne({ _id: new ObjectId(req.params.id) })
-		.then((advertisement) => {
-			res.render('advertentie', {
-				data: advertisement
+
+	if(!isObjectIdValid(req.params.id)) {
+		send404(res)
+	} else {
+
+		collection.findOne({ _id: new ObjectId(req.params.id) })
+			.then((advertisement) => {
+				if(advertisement === null) {
+					send404(res)
+				} else {
+					console.log(advertisement)
+					res.render('advertentie', {
+						pageTitle: advertisement.title,
+						data: advertisement
+					})
+				}
 			})
-		})
+	}
 })
 
 /* Plaats formulier */
@@ -93,16 +134,6 @@ app.get('/plaats', (req, res) => {
 /* Verwerk formulier */
 
 app.post('/post', upload.array('images'), (req, res) => {
-
-	const checkboxToBool = (value) => {
-		if(typeof value === 'string') {
-			if(value === 'on' || value === 'true') {
-				return true
-			} else {
-				return false
-			}
-		}
-	}
 
 	let images = []
 
@@ -144,12 +175,19 @@ app.post('/post', upload.array('images'), (req, res) => {
 
 /* Errors */
 
-app.use((req, res) => {
+const send404 = (res) => {
 	res.status(404)
 	res.render('error', {
 		pageTitle: 'Error: 404 Not Found'
 	})
+}
+
+app.use((req, res) => {
+	send404(res)
 })
+
+
+
 
 app.listen(port, () => {
 	console.log(`Yes! The server is running and listening on port ${port}`)
