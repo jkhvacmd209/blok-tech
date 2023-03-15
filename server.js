@@ -50,6 +50,13 @@ const upload = multer({
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
+
+/* --- VALIDATION FUNCTIONS ---*/
+
+const checkboxToBool = (value) => typeof value === 'string' ? value === 'on' || value === "true" ? true : false : false
+
+const isObjectIdValid = (id) => ObjectId.isValid(id) ? String(new ObjectId(id) === id) ? true : false : false // Source: https://stackoverflow.com/a/29231016
+
 /* --- ROUTING --- */
 
 /* Home pagina */
@@ -73,12 +80,24 @@ app.get('/', (req, res) => {
 })
 
 app.get('/advertentie/:id', (req, res) => {
-	collection.findOne({ _id: new ObjectId(req.params.id) })
-		.then((advertisement) => {
-			res.render('advertentie', {
-				data: advertisement
+
+	if(!isObjectIdValid(req.params.id)) {
+		send404(res)
+	} else {
+
+		collection.findOne({ _id: new ObjectId(req.params.id) })
+			.then((advertisement) => {
+				if(advertisement === null) {
+					send404(res)
+				} else {
+					console.log(advertisement)
+					res.render('advertentie', {
+						pageTitle: advertisement.title,
+						data: advertisement
+					})
+				}
 			})
-		})
+	}
 })
 
 /* Plaats formulier */
@@ -93,16 +112,6 @@ app.get('/plaats', (req, res) => {
 /* Verwerk formulier */
 
 app.post('/post', upload.array('images'), (req, res) => {
-
-	const checkboxToBool = (value) => {
-		if(typeof value === 'string') {
-			if(value === 'on' || value === 'true') {
-				return true
-			} else {
-				return false
-			}
-		}
-	}
 
 	let images = []
 
@@ -144,11 +153,15 @@ app.post('/post', upload.array('images'), (req, res) => {
 
 /* Errors */
 
-app.use((req, res) => {
+const send404 = (res) => {
 	res.status(404)
 	res.render('error', {
 		pageTitle: 'Error: 404 Not Found'
 	})
+}
+
+app.use((req, res) => {
+	send404(res)
 })
 
 app.listen(port, () => {
