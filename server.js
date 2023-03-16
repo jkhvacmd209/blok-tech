@@ -112,7 +112,6 @@ app.get('/advertentie/:id', (req, res) => {
 				if(advertisement === null) {
 					send404(res)
 				} else {
-					console.log(advertisement)
 					res.render('advertentie', {
 						pageTitle: advertisement.title,
 						data: advertisement
